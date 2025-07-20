@@ -1,30 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
@@ -33,4 +8,40 @@ body {
 
 .animate-shake {
   animation: shake 0.5s ease-in-out;
+}
+
+@keyframes tableRowShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+  20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+.animate-table-row-shake {
+  animation: tableRowShake 0.8s ease-in-out;
+  background-color: #fef3c7 !important;
+  border-left: 4px solid #f59e0b !important;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes modalPop {
+  0% { 
+    opacity: 0; 
+    transform: translateY(-20px) scale(0.95);
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(-32px) scale(1);
+  }
+}
+
+.animate-modalPop {
+  animation: modalPop 0.4s ease-out;
 }

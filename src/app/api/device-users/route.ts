@@ -5,10 +5,16 @@ import pool from '@/lib/db';
 export async function GET() {
   try {
     const [rows] = await pool.execute(`
-      SELECT m.id, m.device_user_id, m.fingerprint_data, m.user_id, u.name as user_name, up.phone as user_phone
+      SELECT m.id,
+      m.device_user_id, 
+      m.fingerprint_data,
+      m.user_id,
+      u.name,
+      up.phone,
+      up.address
       FROM device_user_mapping m
-      LEFT JOIN users u ON m.user_id = u.id
-      LEFT JOIN user_profile up ON u.id = up.userid
+      JOIN users u ON m.user_id = u.id
+      JOIN user_profile up ON u.id = up.userid
       ORDER BY m.device_user_id ASC
     `);
     return NextResponse.json(rows);
@@ -21,11 +27,11 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
-    
+
     if (!Array.isArray(data)) {
       return NextResponse.json({ error: 'Invalid data format. Expected an array.' }, { status: 400 });
     }
-    
+
     for (const item of data) {
       if (!item.device_user_id) continue;
       await pool.execute(
@@ -34,7 +40,7 @@ export async function POST(request: NextRequest) {
         [item.device_user_id, item.fingerprint_data || null]
       );
     }
-    
+
     return NextResponse.json({ success: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
